@@ -1,0 +1,53 @@
+
+
+<div class="overflow-hidden container p-5 ">
+<div class="row g-3 justify-content-between">
+
+@for (item of brandDetails?.data; track $index) {
+
+    <div class="col-md-3  product m-3" (click)="getSpecificProduct(item._id)">
+        <img [src]="item.image" alt="" class="w-100">
+        <div class="d-flex justify-content-center"><p>{{item.name}}</p></div>
+        </div>
+
+
+
+        
+
+
+}
+
+@if (clicked==true) {
+    <div class=" screen  position-fixed z-3 top-0 bottom-0 start-0 end-0 d-flex justify-content-center align-items-center " (click)="close()" >
+    
+        <div class="modal" tabindex="-1" class="imgd  w-25 position-fixed my-modal p-3 rounded-1" (click)="onBodyClick($event)" >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                 
+                  <button type="button" class="btn-close" datza-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+                </div>
+                <div class="modal-body  d-flex justify-content-between align-items-center ">
+                  <div>
+                    <h1 class="mainColor">{{brand?.name}}</h1>
+                    <p>{{brand?.name}}</p>
+                  </div>
+                  <div>
+                    <img [src]="brand?.image" class="w-100" alt="">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()">Close</button>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+    
+    </div>
+        
+    }
+
+</div> 
+
+</div>

@@ -1,0 +1,35 @@
+<div class="container bg m-5 p-4 myCon">
+    <section >
+        
+        <h1 class="m-3 myCart">My wish List</h1>
+
+       @for (item of wishlistDetails; track $index) {
+      
+        <div class="row border-bottom mb-2 ">
+            <div class="col-md-2">
+                <img [src]="item.imageCover" class="w-100" [alt]="item.title">
+            </div>
+            <div class="col-md-10 d-flex justify-content-between align-items-center">
+               <div>
+                <h5>{{item.category.name}}</h5>
+                <p>{{item.price}}</p>
+                
+                   <button class="btn p-0" (click)="deleteProduct(item._id)">
+                    <span class="text-danger cr"><i class="fa-solid fa-trash"></i></span>
+                    <span class="text-danger cr">remove</span>
+                   </button>
+            
+               </div>
+               <div>
+                <button class="btn mybtng btn2 " (click)="addToCart(item._id) " (click)="deleteProduct(item._id)" >Add to cart</button>
+               </div>
+            
+            </div>
+            
+                </div>
+            
+    
+       }
+    </section>
+    
+</div>

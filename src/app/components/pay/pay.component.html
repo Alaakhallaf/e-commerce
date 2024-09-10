@@ -1,0 +1,74 @@
+<div class=" shadow p-2 my-2 bg-main-light w-75 mx-auto my-5">
+    <form [formGroup]="orders" (ngSubmit)="ordersSupmet()">
+
+        <div class="my-3">
+            <label for="details">details :</label>
+            <textarea class="form-control" id="details" type="tel" formControlName="details"   [ngClass]="{
+                'is-valid': !orders.get('details')?.errors  && (orders.get('details')?.touched||orders.get('details')?.dirty),
+                'is-invalid': orders.get('details')?.errors  && (orders.get('details')?.touched||orders.get('details')?.dirty)
+            }"></textarea>
+
+            @if (orders.get('details')?.errors &&orders.get('details')?.touched  &&(orders.get('details')?.touched||orders.get('details')?.dirty) ) {
+                <div class="alert-danger alert w-50 ">
+                    @if (orders.get('details')?.getError('required')) {
+                        <p class="m-0">* details Is Required</p>
+                    }
+ 
+                    </div>
+            }
+
+        </div>
+
+        <div class="my-3">
+            <label for="phone">phone :</label>
+            <input class="form-control" id="phone" type="tel" formControlName="phone"   [ngClass]="{
+                'is-valid': !orders.get('phone')?.errors  && (orders.get('phone')?.touched||orders.get('phone')?.dirty),
+                'is-invalid': orders.get('phone')?.errors  && (orders.get('phone')?.touched||orders.get('phone')?.dirty)
+            }">
+
+            @if (orders.get('phone')?.errors &&orders.get('phone')?.touched  &&(orders.get('phone')?.touched||orders.get('phone')?.dirty) ) {
+                <div class="alert-danger alert w-50 ">
+                    @if (orders.get('phone')?.getError('required')) {
+                        <p class="m-0">* phone Is Required</p>
+                    }
+                    @else if (orders.get('phone')?.getError('pattern')) {
+                        <p class="m-0">* Enter valid phone </p>
+                    }
+                    </div>
+            }
+
+        </div>
+
+        <div class="my-3">
+            <label for="city">city :</label>
+            <input class="form-control" id="city" type="tel" formControlName="city"   [ngClass]="{
+                'is-valid': !orders.get('city')?.errors  && (orders.get('city')?.touched||orders.get('city')?.dirty),
+                'is-invalid': orders.get('city')?.errors  && (orders.get('city')?.touched||orders.get('city')?.dirty)
+            }">
+
+            @if (orders.get('city')?.errors &&orders.get('city')?.touched  &&(orders.get('city')?.touched||orders.get('city')?.dirty) ) {
+                <div class="alert-danger alert w-50 ">
+                    @if (orders.get('city')?.getError('required')) {
+                        <p class="m-0">* city Is Required</p>
+                    }
+                    @else if (orders.get('city')?.getError('minlength')) {
+                        <p class="m-0">* city should be more than or equal 3 chars</p>
+                    }
+                    @else if (orders.get('city')?.getError('maxlength')) {
+                        <p class="m-0">* city should be less than or equal 20 chars</p>
+                    }
+                    </div>
+            }
+
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button class="btn  mybtng w-75">Pay now </button>
+
+        </div>
+    </form>
+
+</div>
+
+
+

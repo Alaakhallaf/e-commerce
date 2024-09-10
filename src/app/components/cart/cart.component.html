@@ -1,0 +1,60 @@
+@if (cartDetails) {
+
+
+
+    <div class="container bg m-5 p-4 myCon">
+        <section >
+            <div class="chek d-flex justify-content-between p-4 align-items-center m-1 ">
+                <div class="first">
+                    <h2 class="m-3 myCart">Cart Shop</h2>
+                    <h5 class="m-3  "><span class="fw-light fs-4" >total price:</span> <span class="mainColor">{{cartDetails.totalCartPrice}}</span>  </h5>
+                </div>
+                <div class="second m-3 ">
+                   <!-- ======order button ===== -->
+                    <button class="btn btn-main m-3  mybtng  " [routerLink]='["/pay" , cartDetails._id] '>chek out</button>
+                    <!-- ================= -->
+
+
+        <h5 class="m-3"><span class="fw-light fs-4" >total number of items:</span> <span class="mainColor">{{cartDetails.__v}}</span>  </h5>
+                </div>
+            </div>
+
+
+
+
+           @for (item of cartDetails.products ; track $index) {
+            <div class="row border-bottom mb-2 ">
+                <div class="col-md-2">
+                    <img [src]="item.product.imageCover" class="w-100" [alt]="item.product.title">
+                </div>
+                <div class="col-md-10 d-flex justify-content-between align-items-center">
+                   <div>
+                    <h5>{{item.product.category.name}}</h5>
+                    <p>{{item.price}}</p>
+                    
+                       <button class="btn p-0" (click)="removeItem(item.product.id)">
+                        <span class="text-danger cr"><i class="fa-solid fa-trash"></i></span>
+                        <span class="text-danger cr">remove</span>
+                       </button>
+                
+                   </div>
+                   <div class="d-flex align-items-center gap-2 justify-content-center">
+                    <span class="mainColor" (click)="updareCart(item.product.id,item.count-1)"><i class="fa-regular fa-square-minus myIcon cr"></i></span>     
+                <span class="mainColor">{{ item.count}}</span>
+                 <span class="mainColor" (click)="updareCart(item.product.id,item.count+1)" ><i class="fa-regular fa-square-plus myIcon cr"></i></span>
+   
+                </div> 
+    
+                
+                </div>
+                
+                    </div>
+                
+        
+           }
+           <div class="d-flex justify-content-center " (click)="clearCart()" > <button class="btn btn-outline-danger  btn2 ">clear your cart</button></div>
+        </section>
+        
+    </div>
+
+}

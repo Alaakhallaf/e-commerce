@@ -1,0 +1,97 @@
+@if (products) {
+
+
+
+    <section class="container bg m-5 p-4 myCon ">
+        <div class="d-flex justify-content-center">        <h1 class="text-main  ">All Orders</h1>
+        </div>
+        @for (p of products; track p._id) {
+    
+        <div class="row ">
+            <div class="col-md-12 ">
+                <div class="  m-5 p-4 bg-main-light rounded-4  ">
+    
+                    <div class="chek d-flex justify-content-between p-3 align-items-center m-1 ">
+    
+                        <div class="first m-1">
+    
+                            <h5 class="m-2 small  "><span class="fw-light medium">total price : </span> <span
+                                    class="mainColor">{{p.totalOrderPrice}}</span> </h5>
+                            <h5 class="m-2 small  "><span class="fw-light medium">Is deleverd? : </span> <span
+                                    class="mainColor">{{p.isDelivered ? 'Not delivered yet!' :'Delivered.'}}</span> </h5>
+                            <h5 class="m-2 small"><span class="fw-light medium">total number of items : </span> <span
+                                    class="mainColor">{{p.__v}}</span> </h5>
+                        </div>
+    
+                        <div class="second m-1 ">
+                            <h5 class="m-2 small  "><span class="fw-light medium">created At : </span> <span
+                                    class="mainColor">{{p.createdAt}}</span> </h5>
+                            <h5 class="m-2 small"><span class="fw-light medium">Way of Payment : </span> <span
+                                    class="mainColor">{{p.paymentMethodType}}</span> </h5>
+                            <h5 class="m-2 small"><span class="fw-light medium">Payment date : </span> <span
+                                    class="mainColor">{{p.paidAt}}</span> </h5>
+    
+    
+    
+                        </div>
+                    </div>
+                    <hr>
+    
+    
+                    <div class="container">
+    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="flex-column d-flex">
+                                    <h4>User Data</h4>
+    
+                                    <span>Name : <span class="text-main">{{p.user.name}}</span></span>
+                                    <span>Email : <span class="text-main">{{p.user.email}}</span></span>
+                                    <span>Phone : <span class="text-main">{{p.user.phone}}</span> </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="flex-column d-flex">
+                                    <h4>shipping address</h4>
+                                    <span>Phone : <span class="text-main">{{p.shippingAddress.phone}}</span> </span>
+                                    <span>City : <span class="text-main">{{p.shippingAddress.city}}</span></span>
+                                    <span>Details : <span class="text-main">{{p.shippingAddress.details}}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+    
+                    <div class="row g-3">
+                        <h4> Order</h4>
+                        @for (item of p.cartItems; track item._id) {
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-img ">
+                                    <img class="w-100 h-75"  [src]="item.product.imageCover" [alt]="item.product.title">
+                                    </div>
+                                    <div class="title d-flex flex-column m-3">
+                                        <span>Name : <span class="text-main">{{item.product.title.split(" ", 2).join(" ")}}</span> </span> 
+                                        <span>Price : <span class="text-main">{{item.price}}</span> </span>
+                                        <span>Quantity : <span class="text-main">{{item.count}}</span> </span>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                                                
+    
+    
+    
+    
+    
+    
+    
+                </div>
+            </div>
+        </div>
+        }
+    </section>
+    
+    }

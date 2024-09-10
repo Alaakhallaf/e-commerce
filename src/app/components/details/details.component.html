@@ -1,0 +1,62 @@
+@if (detailsProduct) {
+    <div class="container">
+    
+
+        <section>
+            <div class="row align-items-center">
+                <div class="col-md-3">
+        
+                    <owl-carousel-o [options]="customOptionsMain">
+                       @for (img of DetailsImages; track $index) {
+        
+                        <ng-template carouselSlide>
+                            <img [src]="img" height="300px" class="w-100" alt="">
+                        </ng-template>  
+                       }
+                        
+                      
+                      
+                      
+                      </owl-carousel-o>
+                </div>
+        
+                <div class="col-md-9">
+                   
+                    <h2 >{{ detailsProduct.title.split(" ", 2).join(" ") }}</h2>
+        
+                  <p class="my-4"> {{detailsProduct.description}}</p>
+        
+                    <div class="d-flex justify-content-between align w-75 align-items-center">
+                      <span>{{ detailsProduct.price }} EGP</span>
+                      
+                      <div >
+                        @for (num of [1,2,3,4,5].slice( 0, detailsProduct.ratingsAverage); track
+                        $index) {
+            
+                        <span><i class="fas fa-star rating-color"></i></span>
+            
+                        } @if (detailsProduct.ratingsAverage%2!==0 ) {
+                        <span >
+                          <i class="fa-solid fa-star-half-stroke rating-color"></i>
+                        </span>
+                        }
+                        <span class="text-muted">{{ detailsProduct.ratingsAverage }}</span>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <button class="btn-main w-75" (click)="addCart(detailsProduct._id)">Add to cart</button>
+                        <span (click)="addToWish(detailsProduct._id)" (click)="toggleWishlist(detailsProduct)" 
+                        [ngClass]="{'in-wishlist': isInWishlist(detailsProduct)}"
+                        class="heart-icon"  ><i  class="wishlist-icon"class="fa-solid fa-heart p-2 heart cr "></i></span>
+                      </div>
+        
+                    </div>
+                   
+        
+               </div>
+        
+           
+        </section>
+         
+        </div>
+}

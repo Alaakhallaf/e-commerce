@@ -1,0 +1,92 @@
+<div class="container">
+  <section class="m-5 p-5">
+      <div class="row g-0 ">
+          <div class="col-md-9 ">
+              <owl-carousel-o [options]="customOptionsMain">
+                  <ng-template carouselSlide>
+                      <img src="./assets/images/mine2.avif" height="300px" class="w-100" alt="">
+                  </ng-template>  
+                  <ng-template carouselSlide>
+                      <img src="./assets/images/mine4.avif" height="300px" class="w-100" alt="">
+                  </ng-template>  
+                
+                  <ng-template carouselSlide>
+                      <img src="./assets/images/mine5.avif" height="300px" class="w-100" alt="">
+                  </ng-template>  
+                
+                
+                
+                </owl-carousel-o>
+  
+          </div>
+          <div class="col-md-3 m-0 p-0">
+              <img class="w-100"  src="./assets/images/slider-image-2.jpeg" height="150px" alt="">
+              <img class="w-100" src="./assets/images/slider-image-3.jpeg" height="150px" alt="">
+          </div>
+  
+        
+  
+          
+      </div>
+  </section>
+  
+
+</div>
+<!-- //category// -->
+
+<section class="my-2">
+<owl-carousel-o [options]="customOptionscat" >
+  @for (cat of categoriesList; track $index) {
+  <ng-template carouselSlide>
+    <img [src]="cat.image" height="250px" [alt]="cat.name" />
+    <h6 class="text-main">{{ cat.name }}</h6>
+  </ng-template>
+  }
+</owl-carousel-o>
+</section>
+
+
+
+
+
+<!-- //product/// -->
+<section class=" overflow-hidden">
+<h2 class="text-center">Popular Products</h2>
+<input type="text" [(ngModel)]="searchTerm" placeholder="Search by name..." 
+class="mx-auto my-4 w-75  form-control border-3">  <div class="row g-3">
+  @for (product of productList.slice( 3 , 12)|search :searchTerm ; track product._id) {
+  <div class="col-md-3">
+    <div class="product p-2" >
+      <div [routerLink]="['/details',product._id]">
+          <img [src]="product.imageCover" class="w-100" [alt]="product.title" />
+
+      <h3 class="small text-main">{{ product.category.name }}</h3>
+      <h4 class="h6">{{ product.title.split(" ", 2).join(" ") }}</h4>
+      <div class="d-flex justify-content-between align align-items-center">
+        <span>{{ product.price }}</span>
+        <div>
+          @for (num of [1,2,3,4,5].slice( 0, product.ratingsAverage); track
+          $index) {
+
+          <span><i class="fas fa-star rating-color"></i></span>
+
+          } @if (product.ratingsAverage%2!==0 ) {
+          <span>
+            <i class="fa-solid fa-star-half-stroke rating-color"></i>
+          </span>
+          }
+          <span class="text-muted">{{ product.ratingsAverage }}</span>
+        </div>
+      </div>
+      </div>
+      <div class="div d-flex align-items-center ">
+        <button class="btn-main w-75" (click)="addCart(product.id)" >Add to cart</button>
+        <span (click)="addToWish(product.id) " (click)="toggleWishlist(product)" 
+        [ngClass]="{'in-wishlist': isInWishlist(product)}"
+        class="heart-icon"  ><i class="fa-solid fa-heart p-2 heart cr"></i></span>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+</section>
