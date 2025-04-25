@@ -1,8 +1,8 @@
-<section class=" overflow-hidden">
+<section class=" overflow-hidden p-5">
     
     <input type="text" [(ngModel)]="searchTerm" placeholder="Search by name.." class="mx-auto my-4 w-75  form-control border-3">  <div class="row g-3">
       @for (product of productList |search :searchTerm ; track product._id) {
-      <div class="col-md-3">
+      <div class="col-md-3 ">
         <div class="product p-2" >
           <div [routerLink]="['/details',product._id]">
               <img [src]="product.imageCover" class="w-100" [alt]="product.title" />
