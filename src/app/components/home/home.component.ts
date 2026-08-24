@@ -14,6 +14,8 @@ import { CartService } from '../../core/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { WishListService } from '../../core/services/wish.service';
 import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthApiService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -32,11 +34,12 @@ export class HomeComponent implements OnInit , OnDestroy {
   private readonly _CartService=inject(CartService)
   private readonly _WishService= inject(WishListService)
   private readonly _ToastrService=inject(ToastrService)
+  private readonly _Router=inject(Router)
+  private readonly _AuthApiService=inject(AuthApiService)
 
 
   productList:Iproduct[]=[]
  categoriesList:Icategory[]=[]
- wishlist = new Set<number>(); 
 
 
 getAllProduct!:Subscription;
@@ -106,10 +109,21 @@ customOptionscat: OwlOptions = {
       },
 
     })
+
+    // Populate the shared wishlist state so hearts reflect the real,
+    // up-to-date wishlist status as soon as the product list loads.
+    if (this._AuthApiService.isLoggedIn()) {
+      this._WishService.refreshWishlist();
+    }
   }
 
 
   addCart(id:string):void{
+
+    if (!this._AuthApiService.isLoggedIn()) {
+      this._Router.navigate(['/login'], { queryParams: { returnUrl: this._Router.url } });
+      return;
+    }
 
     this._CartService.AdProducttoCart(id).subscribe({
       next:(res)=>{
@@ -122,21 +136,7 @@ customOptionscat: OwlOptions = {
           }
     })
     }
-    
-    addToWish(id:string):void{
-    
-      this._WishService.addToWishlist(id).subscribe({
-        next:(res)=>{
-          console.log(res)
-          this._ToastrService.success(res.message,"Fresh Cart")
 
-            },
-            error:(err)=>{
-              console.log(err)
-                }
-      })
-      
-      }
 ngOnDestroy():void{ 
   this.getAllProduct?.unsubscribe()
 }
@@ -144,15 +144,20 @@ ngOnDestroy():void{
 
 
 toggleWishlist(product: any) {
-  if (this.wishlist.has(product.id)) {
-    this.wishlist.delete(product.id);
+  const id = product._id;
+  if (this._WishService.isInWishlist(id)) {
+    this._WishService.deleteproduct(id).subscribe({
+      next: () => this._ToastrService.success('Removed from wishlist', 'Fresh Cart'),
+    });
   } else {
-    this.wishlist.add(product.id);
+    this._WishService.addToWishlist(id).subscribe({
+      next: (res) => this._ToastrService.success(res.message, 'Fresh Cart'),
+    });
   }
 }
 
 isInWishlist(product: any): boolean {
-  return this.wishlist.has(product.id); 
+  return this._WishService.isInWishlist(product._id);
 }
  
 }

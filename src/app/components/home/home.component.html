@@ -81,7 +81,7 @@ class="mx-auto my-4 w-75  form-control border-3">  <div class="row g-3">
       </div>
       <div class="div d-flex align-items-center ">
         <button class="btn-main w-75" (click)="addCart(product.id)" >Add to cart</button>
-        <span (click)="addToWish(product.id) " (click)="toggleWishlist(product)" 
+        <span (click)="toggleWishlist(product)" 
         [ngClass]="{'in-wishlist': isInWishlist(product)}"
         class="heart-icon"  ><i class="fa-solid fa-heart p-2 heart cr"></i></span>
       </div>

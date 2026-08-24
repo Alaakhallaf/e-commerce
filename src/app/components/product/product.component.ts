@@ -11,6 +11,8 @@ import { CartService } from '../../core/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { WishListService } from '../../core/services/wish.service';
 import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthApiService } from '../../core/services/auth.service';
 
 
 @Component({
@@ -25,10 +27,11 @@ export class ProductComponent  {
   private readonly _CartService = inject(CartService)
   private readonly _WishService = inject(WishListService)
 private readonly _ToastrService=inject(ToastrService)
+private readonly _Router = inject(Router)
+private readonly _AuthApiService = inject(AuthApiService)
 
 
   productList:Iproduct[] = []
-  wishlist = new Set<number>(); 
 
   searchTerm:string ="";
   
@@ -44,10 +47,18 @@ private readonly _ToastrService=inject(ToastrService)
       }
     })
 
-    
+    // Populate the shared wishlist state so hearts reflect the real,
+    // up-to-date wishlist status as soon as the product list loads.
+    if (this._AuthApiService.isLoggedIn()) {
+      this._WishService.refreshWishlist();
+    }
   }
 
   addCart(Id:string){
+    if (!this._AuthApiService.isLoggedIn()) {
+      this._Router.navigate(['/login'], { queryParams: { returnUrl: this._Router.url } });
+      return;
+    }
     this.id=Id
     this._CartService.AdProducttoCart(Id).subscribe({
       next:(res)=>{
@@ -58,40 +69,21 @@ private readonly _ToastrService=inject(ToastrService)
     })
   }
 
-  addWishList(Id : string){
-    this.id=Id
-    this._WishService.addToWishlist(Id).subscribe({
-      next:(res)=>
-      {
-        console.log(res)
-        this._ToastrService.success(res.message)
-        
-      }
-    })
-  }
-
-   toggleWishlist(product: any) {
-    if (this.wishlist.has(product.id)) {
-      this.wishlist.delete(product.id);
+  toggleWishlist(product: any) {
+    const id = product._id;
+    if (this._WishService.isInWishlist(id)) {
+      this._WishService.deleteproduct(id).subscribe({
+        next: () => this._ToastrService.success('Removed from wishlist'),
+      });
     } else {
-      this.wishlist.add(product.id);
+      this._WishService.addToWishlist(id).subscribe({
+        next: (res) => this._ToastrService.success(res.message),
+      });
     }
-    this.saveWishlistToLocalStorage();
   }
 
   isInWishlist(product: any): boolean {
-    return this.wishlist.has(product.id);
-  }
-
-  loadWishlistFromLocalStorage() {
-    const savedWishlist = localStorage.getItem('wishlist');
-    if (savedWishlist) {
-      this.wishlist = new Set<number>(JSON.parse(savedWishlist));
-    }
-  }
-
-  saveWishlistToLocalStorage() {
-    localStorage.setItem('wishlist', JSON.stringify(Array.from(this.wishlist)));
+    return this._WishService.isInWishlist(product._id);
   }
 
 }

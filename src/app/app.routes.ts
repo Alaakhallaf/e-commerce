@@ -27,20 +27,23 @@ export const routes: Routes = [
         {path:'register', component:RegisterComponent},
        {path:'forget' , component:ForgetPasswordComponent}
     ]},
-    {path:'', component:BlankLayoutComponent, canActivate:[authGuard], children:[
+    {path:'', component:BlankLayoutComponent, children:[
         {path:"", redirectTo:'home' , pathMatch:'full'},
-        {path:'home', component:HomeComponent},
-        {path:'cart', component:CartComponent},
-        {path:'wish', component:WishListComponent},
 
+        // Public browsing routes - no login required.
+        {path:'home', component:HomeComponent},
         {path:'products', component:ProductComponent},
         {path:'categories', component:CategoriesComponent},
         {path:'brands', component:BrandsComponent},
         {path:'details/:id',component:DetailsComponent
         },
-        {path:'allorders',component:AllordersComponent
+
+        // Routes that require an authenticated user.
+        {path:'cart', component:CartComponent, canActivate:[authGuard]},
+        {path:'wish', component:WishListComponent, canActivate:[authGuard]},
+        {path:'allorders',component:AllordersComponent, canActivate:[authGuard]
         },
-        {path:'pay/:id',component:PayComponent
+        {path:'pay/:id',component:PayComponent, canActivate:[authGuard]
         }
     ]},
     {path:'**', component:NotfoundComponent},

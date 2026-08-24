@@ -1,3 +1,7 @@
-<app-nav-blank></app-nav-blank>
+@if (isLoggedIn$ | async) {
+  <app-nav-blank></app-nav-blank>
+} @else {
+  <app-nav-auth></app-nav-auth>
+}
 <router-outlet></router-outlet>
 <app-footer></app-footer>

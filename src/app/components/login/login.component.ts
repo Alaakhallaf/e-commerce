@@ -5,7 +5,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModu
 import { AuthApiService } from '../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgClass } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,6 +20,7 @@ export class LoginComponent {
   private readonly _AuthApiService = inject(AuthApiService)
   private readonly _FormBuilder = inject(FormBuilder)
   private readonly _Router = inject(Router)
+  private readonly _ActivatedRoute = inject(ActivatedRoute)
 
   msgError: string = ""
   isLoading: boolean = false;
@@ -52,9 +53,14 @@ export class LoginComponent {
             localStorage.setItem('userToken', res.token)
 
             this._AuthApiService.saveUserData()
+            // Let the navbar (and anything else listening) know the user is
+            // now authenticated, without requiring a full page reload.
+            this._AuthApiService.setLoggedIn(true)
 
-
-            this._Router.navigate(['/home'])
+            // If the user was redirected here (e.g. from "Add to Cart"),
+            // send them back to where they were trying to go.
+            const returnUrl = this._ActivatedRoute.snapshot.queryParamMap.get('returnUrl')
+            this._Router.navigateByUrl(returnUrl || '/home')
           }
 
           this.isLoading = false

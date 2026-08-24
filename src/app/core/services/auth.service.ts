@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { isPlatformBrowser } from '@angular/common';
@@ -18,6 +18,30 @@ export class AuthApiService {
 private readonly _HttpClient= inject(HttpClient)
 private readonly _Router= inject(Router)
 _PLATFORM_ID = inject(PLATFORM_ID)
+
+// Reactive authentication state so the navbar / guards / components can
+// react immediately to login/logout without needing a full page reload.
+private readonly isLoggedInSource = new BehaviorSubject<boolean>(this.hasToken());
+readonly isLoggedIn$ = this.isLoggedInSource.asObservable();
+
+private hasToken(): boolean {
+  if (isPlatformBrowser(this._PLATFORM_ID)) {
+    return localStorage.getItem('userToken') !== null;
+  }
+  return false;
+}
+
+// Synchronous check used by components/guards that need an immediate answer
+// (e.g. deciding whether "Add to Cart" should redirect to /login).
+isLoggedIn(): boolean {
+  return this.hasToken();
+}
+
+// Called after a successful login (and on logout) so every part of the app
+// using isLoggedIn$ (e.g. the navbar) updates immediately.
+setLoggedIn(status: boolean): void {
+  this.isLoggedInSource.next(status);
+}
 
 
 setRegisterForm(data:object):Observable<any>{
@@ -44,6 +68,7 @@ if (isPlatformBrowser(this._PLATFORM_ID)){
 logOut():void{
   localStorage.removeItem('userToken')
   this.userData=null;
+  this.setLoggedIn(false)
   this._Router.navigate(['/login'])
 
 

@@ -13,7 +13,7 @@ if(isPlatformBrowser(_PLATFORM_ID)){
     return true;
   }
   else{
-    _Router.navigate(['/login'])
+    _Router.navigate(['/login'], { queryParams: { returnUrl: state.url } })
     return false;
   }
 }

@@ -6,7 +6,7 @@ export const headersInterceptor: HttpInterceptorFn = (req, next) => {
 const _PLATFORM_ID = inject(PLATFORM_ID)
 
 if(isPlatformBrowser(_PLATFORM_ID)){
-  if(localStorage.getItem('userTerm') !== null){
+  if(localStorage.getItem('userToken') !== null){
 
 
     if(req.url.includes('cart') || req.url.includes('wishlist') || req.url.includes('orders')  || req.url.includes('home') ){

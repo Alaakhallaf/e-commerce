@@ -28,7 +28,7 @@
           </div>
           <div class="d-flex align-items-center ">
             <button class="btn-main w-75" (click)="addCart(product._id)">Add to cart</button>
-            <span (click)="addWishList(product._id)" (click)="toggleWishlist(product)" 
+            <span (click)="toggleWishlist(product)" 
             [ngClass]="{'in-wishlist': isInWishlist(product)}"
             class="heart-icon" ><i class="fa-solid fa-heart p-2 heart cr " ></i></span>
           </div>
