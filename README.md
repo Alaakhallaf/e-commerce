@@ -3,10 +3,8 @@
 A full-featured, responsive E-Commerce single-page application built using **Angular**, **TypeScript**, and **Bootstrap**. The platform delivers a seamless shopping experience with dynamic product filtering, secure authentication, reactive cart & wishlist systems, and an end-to-end checkout & payment flow.
 
 ---
-
 ### 🚀 Live Demo
-🔗 **[Click here to view the Live Demo](e-commerce-yg44.vercel.app)**
-
+🔗 **[Click here to view the Live Demo](https://e-commerce-yg44.vercel.app)**
 > ⚠️ **Important Security Note:**  
 > This is a demo application integrated with a test payment gateway. **Please DO NOT enter real Visa or Credit Card numbers.** Use dummy test credentials provided by the checkout interface.
 
