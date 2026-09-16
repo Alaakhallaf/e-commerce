@@ -1,27 +1,38 @@
-# ECommerce
+# 🛒 E-Commerce Web Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
+A full-featured, responsive E-Commerce single-page application built using **Angular**, **TypeScript**, and **Bootstrap**. The platform delivers a seamless shopping experience with dynamic product filtering, secure authentication, reactive cart & wishlist systems, and an end-to-end checkout & payment flow.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 🚀 Live Demo
+🔗 **[Click here to view the Live Demo](e-commerce-yg44.vercel.app)**
 
-## Code scaffolding
+> ⚠️ **Important Security Note:**  
+> This is a demo application integrated with a test payment gateway. **Please DO NOT enter real Visa or Credit Card numbers.** Use dummy test credentials provided by the checkout interface.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+### 🌟 Key Features
+- 🔐 **Authentication & Security:** Robust User Registration & Login forms backed by Angular **Route Guards** to protect unauthorized route access.
+- 🔍 **Real-Time Product Search & Filtering:** Dynamic instant search bar that filters products by name and category as you type.
+- 📦 **Product Details:** Detailed view for individual products with dynamic routing and full information rendering.
+- 🛒 **Cart & Wishlist System:** Real-time management for adding, updating, or removing items with continuous total calculations.
+- 💳 **Complete Payment & Checkout Flow:** End-to-end purchasing process including shipping details and direct payment simulation.
+- ✨ **Enhanced UX:** Clean feedback mechanisms integrated using **Toaster Notifications** for actionable user events (e.g., item added, login success, payment complete).
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+### 🛠️ Tech Stack & Architecture
+- **Framework:** Angular & TypeScript
+- **Styling & Components:** Bootstrap, SCSS, HTML5
+- **HTTP & Data Flow:** Angular HttpClient, **HttpInterceptors** (for token & request handling), RxJS Observables & Services
+- **Routing:** Angular Router with Functional Guards
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+### 💻 Local Setup Instructions
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/Alaakhallaf/YOUR_REPO_NAME.git](https://github.com/Alaakhallaf/e-commerce
+.git)
